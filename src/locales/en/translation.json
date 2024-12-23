@@ -1,0 +1,8 @@
+{
+    "title": "Semantic Search",
+    "placeholder": "Enter your SPARQL query here...",
+    "searchButton": "Search",
+    "localResults": "Local Results",
+    "dbpediaResults": "DBpedia Results",
+    "footerText": "© 2024 Semantic Search. All rights reserved."
+  }

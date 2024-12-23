@@ -1,10 +1,12 @@
+// src/components/Search.jsx
 import React, { useState } from "react";
 import axios from "axios";
-import Results from "./Results";
-
-//actualizacion AleMon PR
+import { useTranslation } from "react-i18next";
+import Results from "./Results"; 
+import i18n from "../i18n"; // Importación corregida
 
 const Search = () => {
+  const { t } = useTranslation();
   const [query, setQuery] = useState("");
   const [localResults, setLocalResults] = useState([]);
   const [dbpediaResults, setDbpediaResults] = useState([]);
@@ -12,7 +14,7 @@ const Search = () => {
 
   const executeSearch = async () => {
     if (!query) {
-      alert("Por favor, ingresa una consulta SPARQL.");
+      alert(t("placeholder"));
       return;
     }
 
@@ -28,17 +30,41 @@ const Search = () => {
     }
   };
 
+  const handleLanguageChange = (e) => {
+    i18n.changeLanguage(e.target.value);
+  };
+
   return (
-    <div>
-      <textarea
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        placeholder="Buscador..."
-      />
-      <button onClick={executeSearch}>Buscar</button>
-      {error && <div className="error">{error}</div>}
-      <Results title="Resultados Locales" results={localResults} />
-      <Results title="Resultados de DBpedia" results={dbpediaResults} />
+    <div className="container mt-5">
+      <h1 className="text-center">{t("title")}</h1>
+      <div className="mb-3">
+        <select
+          className="form-select"
+          onChange={handleLanguageChange}
+        >
+          <option value="es">Español</option>
+          <option value="en">English</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
+
+      <div className="mb-3">
+        <textarea
+          className="form-control"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={t("placeholder")}
+        />
+      </div>
+      <button className="btn btn-primary" onClick={executeSearch}>{t("searchButton")}</button>
+
+      {error && <div className="alert alert-danger mt-3">{error}</div>}
+      <Results title={t("localResults")} results={localResults} />
+      <Results title={t("dbpediaResults")} results={dbpediaResults} />
+
+      <footer className="footer mt-5 text-center">
+        <span>{t("footerText")}</span>
+      </footer>
     </div>
   );
 };

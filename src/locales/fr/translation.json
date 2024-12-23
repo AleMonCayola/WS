@@ -1,0 +1,8 @@
+{
+    "title": "Recherche Sémantique",
+    "placeholder": "Tapez votre requête SPARQL ici...",
+    "searchButton": "Rechercher",
+    "localResults": "Résultats Locaux",
+    "dbpediaResults": "Résultats de DBpedia",
+    "footerText": "© 2024 Recherche Sémantique. Tous droits réservés."
+  }

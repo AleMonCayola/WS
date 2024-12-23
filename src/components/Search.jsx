@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import Results from "./Results";
 
+//actualizacion AleMon PR
+
 const Search = () => {
   const [query, setQuery] = useState("");
   const [localResults, setLocalResults] = useState([]);

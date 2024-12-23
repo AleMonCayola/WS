@@ -4,7 +4,7 @@ import "./App.css";
 
 const App = () => (
   <div className="container">
-    <h1>Buscador Semántico</h1>
+    <h1>Buscador Computadora</h1>
     <Search />
   </div>
 );

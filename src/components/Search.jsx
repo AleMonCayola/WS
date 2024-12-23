@@ -31,7 +31,7 @@ const Search = () => {
       <textarea
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Escribe tu consulta SPARQL aquí..."
+        placeholder="Buscador..."
       />
       <button onClick={executeSearch}>Buscar</button>
       {error && <div className="error">{error}</div>}

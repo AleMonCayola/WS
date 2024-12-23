@@ -1,0 +1,27 @@
+# Node modules
+node_modules/
+yarn.lock
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite build output
+dist/
+
+# Editor/IDE files
+.vscode/
+.idea/
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+
+# Entornos locales
+.env
+.env.local
+
+# Otros
+*.log
+*.tmp

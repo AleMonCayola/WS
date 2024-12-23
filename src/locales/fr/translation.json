@@ -1,6 +1,6 @@
 {
     "title": "Recherche Sémantique",
-    "placeholder": "Tapez votre requête SPARQL ici...",
+    "placeholder": "Recherchez le terme qui vous intéresse...",
     "searchButton": "Rechercher",
     "localResults": "Résultats Locaux",
     "dbpediaResults": "Résultats de DBpedia",

@@ -1,8 +1,8 @@
 {
     "title": "Buscador Semántico",
-    "placeholder": "Escribe tu consulta SPARQL aquí...",
+    "placeholder": "Busca el termino de tu interes...",
     "searchButton": "Buscar",
     "localResults": "Resultados Locales",
     "dbpediaResults": "Resultados de DBpedia",
     "footerText": "© 2024 Buscador Semántico. Todos los derechos reservados."
-  }
+}

@@ -1,47 +1,54 @@
-// src/components/Search.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import Results from "./Results"; 
-import i18n from "../i18n"; // Importación corregida
+import ResultsDBpedia from "./ResultsDBpedia";
+import ResultsLocalDB from "./ResultsLocalDB"; // Nuevo componente
+import i18n from "../i18n";
 
 const Search = () => {
   const { t } = useTranslation();
-  const [query, setQuery] = useState("");
-  const [localResults, setLocalResults] = useState([]);
+  const [inputData, setInputData] = useState("");
+  const [local_results, setlocal_results] = useState([]);
   const [dbpediaResults, setDbpediaResults] = useState([]);
   const [error, setError] = useState(null);
+  const [language, setLanguage] = useState("es"); // Valor por defecto es Español
 
   const executeSearch = async () => {
-    if (!query) {
+    if (!inputData.trim()) {
       alert(t("placeholder"));
       return;
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/search", { query });
-      const { localResults, dbpediaResults } = response.data;
+      const response = await axios.get(`http://localhost:5000/search/${inputData}/${language}`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-      setLocalResults(localResults || []);
-      setDbpediaResults(dbpediaResults || []);
+      console.log(response);
+      const { dbpedia_results = [], local_results = [] } = response.data;
+
+      setlocal_results(local_results);
+      setDbpediaResults(dbpedia_results);
       setError(null);
     } catch (err) {
-      setError(err.response?.data?.error || "Error desconocido");
+      console.error("Error durante la búsqueda:", err);
+      setError(err.response?.data?.error || t("unknownError"));
     }
   };
 
   const handleLanguageChange = (e) => {
-    i18n.changeLanguage(e.target.value);
+    const selectedLanguage = e.target.value;
+    setLanguage(selectedLanguage); // Asignar el idioma seleccionado
+    i18n.changeLanguage(selectedLanguage); // Cambiar el idioma en i18n
   };
 
   return (
     <div className="container mt-5">
       <h1 className="text-center">{t("title")}</h1>
       <div className="mb-3">
-        <select
-          className="form-select"
-          onChange={handleLanguageChange}
-        >
+        <select className="form-select" onChange={handleLanguageChange} value={language}>
           <option value="es">Español</option>
           <option value="en">English</option>
           <option value="fr">Français</option>
@@ -51,16 +58,37 @@ const Search = () => {
       <div className="mb-3">
         <textarea
           className="form-control"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          value={inputData}
+          onChange={(e) => setInputData(e.target.value)}
           placeholder={t("placeholder")}
         />
       </div>
-      <button className="btn btn-primary" onClick={executeSearch}>{t("searchButton")}</button>
+      <button className="btn btn-primary" onClick={executeSearch}>
+        {t("searchButton")}
+      </button>
 
       {error && <div className="alert alert-danger mt-3">{error}</div>}
-      <Results title={t("localResults")} results={localResults} />
-      <Results title={t("dbpediaResults")} results={dbpediaResults} />
+
+      {/* Resultados locales */}
+      <ResultsLocalDB
+        title={t("local_results")}
+        results={local_results.map((result) => ({
+          label: result.label || "Sin etiqueta",
+          subject: result.subject || "Sin URL",
+          type: result.type || "Sin tipo",
+        }))}
+      />
+
+      {/* Resultados de DBpedia */}
+      <ResultsDBpedia
+        title={t("dbpediaResults")}
+        results={dbpediaResults.map((result) => ({
+          label: result.label || "Sin etiqueta",
+          comment: result.comment || "Sin comentarios",
+          subject: result.subject || "Sin URL",
+          type: result.type || "Sin tipo",
+        }))}
+      />
 
       <footer className="footer mt-5 text-center">
         <span>{t("footerText")}</span>

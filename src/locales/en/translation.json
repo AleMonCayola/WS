@@ -1,6 +1,6 @@
 {
     "title": "Semantic Search",
-    "placeholder": "Enter your SPARQL query here...",
+    "placeholder": "Search for the term of your interest...",
     "searchButton": "Search",
     "localResults": "Local Results",
     "dbpediaResults": "DBpedia Results",
